@@ -1,0 +1,81 @@
+import nltk 
+from nltk.chat.util import Chat, reflections 
+
+pairs = [
+    [ r"(hi|hello|hey|hlo)", 
+        ["Hi,welcome to our hotel booking service and thanks for choosing our hotel" , 
+         "Hello! How can I assist you today?", 
+         "Hi there! How can I help with your reservation?"] 
+    ],
+    [ r"(.*)HELP(.*)", 
+        ["Sure! I'm here to help. What do you need assistance with?", 
+         "Of course! Please describe your queries."] 
+    ],
+    [ r"(.*)available(.*)", 
+        ["what kind of rooms are you expecting? We have single room,double room,deluxe twin room,suite room,family room,executive business room."] 
+    ],
+    [ r"(.*)single|single room|single room price|double room (.*)", 
+        ["basic room with essential amenities"] 
+    ],
+    [ r"(.*)deluxe twin|deluxe(.*)", 
+        ["It's more spacious with better furnishings and extra amenities"] 
+    ],
+    [ r"(.*)suite(.*)", 
+        ["It has larger rooms with separate living and sleeping areas"] 
+    ],
+    [ r"(.*)executive business(.*)", 
+        ["It is designed for corporate travellers with workspaces"] 
+    ],
+    [ r"(.*)book room(.*)", 
+        ["Sure! Please provide your check-in and check-out dates.", 
+         "I can help with that. How many guests? "] 
+    ],
+    [ r"(.*)room price|amount|price|rate(.*)", 
+        ["single room:3,000 Rs(per day/night)\ndouble room:6,000 Rs (per day/night)\ndeluxe room:8,000 Rs (per day/night)\nsuite room:10,500 Rs(per day/night)\nexecutive business room:13,500 Rs(per day/night)"] 
+    ],
+    [ r"(.*)wifi(.*)", 
+        ["Yes, all our hotel rooms offer free high-speed Wi-Fi.", 
+         "Free Wi-Fi is available in all rooms and common areas."] 
+    ],
+    [ r"(.*)refund(.*)", 
+        ["I can help with refunds.Refunds are processed within 5-7 business days", 
+         "If you are eligible for a refund, the amount will be credited back to your original payment method."] 
+    ],
+    [ r"(.*)booking status|booking|status|booking details(.*)", 
+        ["You can check your booking status in your account under 'My Reservations'", 
+         "Your booking confirmation email should also contain the latest status. Have you checked there?"] 
+    ],
+    [ r"(.*)414|866|186|468(.*)", 
+        ["your cancellation will be processed","your cancellation is done","your cancellation is still processing"] 
+    ],
+    [ r"(.*)cancel booking(.*)", 
+        ["To cancel your booking, please provide your reservation ID.", 
+         "I can process a cancellation. What's your reservation number?"] 
+    ],
+    [ r"(.*)modify booking(.*)", 
+        ["I can update your booking. Please share your reservation details.", 
+         "Sure! Let me know your new check-in and check-out dates."] 
+    ],
+    [ r"(.*)food|lunch|dinner|breakfast|snacks(.*)", 
+        ["food is included in deluxe and suite rooms.", 
+         "You can add food to your booking for an extra charge."] 
+    ],
+    [ r"bye|goodbye", 
+        ["Goodbye! Have a great day!", 
+         "Bye! Feel free to return if you need more help."] 
+    ]
+]
+
+chatbot = Chat(pairs, reflections)
+def start_chat():
+    print("Hello! I'm your customer support bot.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ["bye", "exit", "quit"]:
+            print("Chatbot: Goodbye! Have a great day!")
+            break
+        response = chatbot.respond(user_input)
+        print(f"Chatbot: {response}")
+
+if __name__ == "__main__":
+    start_chat()
